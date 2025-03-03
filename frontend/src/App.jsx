@@ -1,17 +1,25 @@
-import toast, { Toaster } from 'react-hot-toast';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard"; // New component
+import toast, { Toaster } from "react-hot-toast";
+import "./index.css"; // Ensure Tailwind is imported
+import CreateCapsule from "./pages/CreateCapsule";
 
 function App() {
-
-  const handleClick = () => toast.success('Success')
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <button className="h-10 w-16 bg-green-700 hover:bg-green-600 active:bg-green-500 text-white rounded-[30px]" onClick={handleClick}>hi</button>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
-    </div>
-  )
+    <Router>
+      <Toaster /> {/* Global toast provider */}
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Login />} /> {/* Default route */}
+        <Route path="/create-capsule" element={<CreateCapsule />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
