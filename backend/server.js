@@ -26,9 +26,6 @@ app.use(
     })
 );
 
-// Serve uploaded files
-app.use("/uploads", express.static("uploads"));
-
 // MongoDB connection
 mongoose
     .connect(process.env.MONGO_URI)

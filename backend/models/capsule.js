@@ -6,7 +6,6 @@ const capsuleSchema = new mongoose.Schema({
     releaseDate: { type: Date, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // Link to user
     userEmail: { type: String, required: true }, // Store user's email from User model
-    media: { type: String }, // Store file path/URL (e.g., for images/videos)
     createdAt: { type: Date, default: Date.now },
 });
 

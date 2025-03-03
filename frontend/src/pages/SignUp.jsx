@@ -31,7 +31,7 @@ function SignUp() {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success(data.message || "Account created successfully!");
+                toast.success(data.message || "Account created successfully! Login to continue.");
                 setFormData({ username: "", email: "", password: "" }); // Clear form
                 navigate("/dashboard"); // Redirect to dashboard
             } else {

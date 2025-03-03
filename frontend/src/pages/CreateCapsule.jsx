@@ -10,8 +10,6 @@ function CreateCapsule() {
         releaseDate: "",
     });
 
-    const [file, setFile] = useState(null);
-    const [filePreview, setFilePreview] = useState(null);
     const navigate = useNavigate(); // For redirection
 
     const handleChange = (e) => {
@@ -22,59 +20,43 @@ function CreateCapsule() {
         });
     };
 
-    const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            setFile(selectedFile);
-
-            // Create preview for images
-            if (selectedFile.type.startsWith("image/")) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    setFilePreview(e.target.result);
-                };
-                reader.readAsDataURL(selectedFile);
-            } else if (selectedFile.type.startsWith("video/")) {
-                // For video, we'll just display the file name
-                setFilePreview(null);
-            } else {
-                setFilePreview(null);
-            }
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const data = new FormData();
-        data.append("title", formData.title);
-        data.append("content", formData.content);
-        data.append("releaseDate", formData.releaseDate);
-        if (file) {
-            data.append("media", file);
+        // Client-side validation
+        if (!formData.title.trim() || !formData.content.trim() || !formData.releaseDate) {
+            toast.error("All fields are required");
+            return;
         }
 
-        console.log("Form data:", formData);
-        console.log("File:", file);
+        const data = {
+            title: formData.title.trim(),
+            content: formData.content.trim(),
+            releaseDate: formData.releaseDate,
+        };
+
+        console.log("Form data before submission:", data);
 
         try {
             const response = await fetch("http://localhost:3000/api/capsules/create", {
                 method: "POST",
-                body: data,
+                headers: { "Content-Type": "application/json" }, // Explicitly set JSON
+                body: JSON.stringify(data),
                 credentials: "include", // Ensure session is sent
             });
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
             const result = await response.json();
 
             if (response.ok) {
                 toast.success(result.message || "Capsule created successfully!");
                 setFormData({ title: "", content: "", releaseDate: "" });
-                setFile(null);
-                setFilePreview(null);
                 navigate("/dashboard");
             } else {
                 toast.error(result.error || "Failed to create capsule");
             }
         } catch (error) {
+            console.error("Fetch error:", error);
             toast.error("Error creating capsule: " + error.message);
         }
     };
@@ -131,39 +113,6 @@ function CreateCapsule() {
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <label
-                            htmlFor="media"
-                            className="block text-xs sm:text-sm text-gray-300 mb-1"
-                        >
-                            Upload Image or Video
-                        </label>
-                        <input
-                            id="media"
-                            name="media"
-                            type="file"
-                            onChange={handleFileChange}
-                            accept="image/*,video/*"
-                            className="block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-gray-800 file:text-white hover:file:bg-gray-700 focus:outline-none"
-                        />
-
-                        {filePreview && (
-                            <div className="mt-2">
-                                <img
-                                    src={filePreview}
-                                    alt="Preview"
-                                    className="max-h-40 rounded-md"
-                                />
-                            </div>
-                        )}
-
-                        {file && file.type.startsWith("video/") && (
-                            <div className="mt-2 text-sm text-gray-300">
-                                Video selected: {file.name}
-                            </div>
-                        )}
-                    </div>
-
                     <button
                         type="submit"
                         className="w-full flex justify-center py-2 sm:py-3 px-4 border border-transparent rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300 ease-in-out text-sm sm:text-base mt-6"
@@ -172,7 +121,6 @@ function CreateCapsule() {
                     </button>
                 </form>
             </div>
-            <Toaster />
         </div>
     );
 }

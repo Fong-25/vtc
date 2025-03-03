@@ -1,8 +1,10 @@
+const path = require("path");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "uploads/"); // Store files in an "uploads" folder
+        const uploadPath = path.join(__dirname, "../uploads");
+        cb(null, uploadPath); // Use absolute path from config directory
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname); // Unique filename
