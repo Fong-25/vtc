@@ -12,19 +12,21 @@ function Dashboard() {
     useEffect(() => {
         const fetchCapsules = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/capsules/user", { //update later
+                const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/capsules/user`, {
                     method: "GET",
                     credentials: "include", // Ensure session is sent
                 });
                 const data = await response.json();
+                console.log("Fetched capsules data:", data); // Log the response data
 
                 if (response.ok) {
-                    setCapsules(data.capsules || []); // Assuming backend returns { capsules: [...] }
+                    setCapsules(data.capsules || []);
                 } else {
                     toast.error(data.error || "Failed to load capsules");
                     navigate("/login"); // Redirect to login if not authenticated
                 }
             } catch (error) {
+                console.error("Error loading capsules:", error);
                 toast.error("Error loading capsules: " + error.message);
                 navigate("/login"); // Redirect on error
             }
@@ -32,6 +34,11 @@ function Dashboard() {
 
         fetchCapsules();
     }, [navigate]);
+
+    const handleDeleteCapsule = (capsuleId) => {
+        // console.log("Deleting capsule with ID:", capsuleId); // Log the ID being deleted
+        setCapsules(capsules.filter((capsule) => capsule._id !== capsuleId));
+    };
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-6 relative">
             <div className="max-w-4xl mx-auto p-8 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 my-5">
@@ -48,9 +55,11 @@ function Dashboard() {
                         capsules.map((capsule) => (
                             <CapsuleCard
                                 key={capsule._id} // Use MongoDB _id or a unique identifier
+                                id={capsule._id} // Pass the MongoDB _id
                                 title={capsule.title}
                                 content={capsule.content}
                                 releaseDate={capsule.releaseDate}
+                                onDelete={handleDeleteCapsule} // Pass delete callback
                             />
                         ))
                     ) : (

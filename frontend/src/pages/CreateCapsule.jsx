@@ -38,7 +38,7 @@ function CreateCapsule() {
         // console.log("Form data before submission:", data);
 
         try {
-            const response = await fetch("http://localhost:3000/api/capsules/create", { // update later
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/capsules/create`, { // update later
                 method: "POST",
                 headers: { "Content-Type": "application/json" }, // Explicitly set JSON
                 body: JSON.stringify(data),

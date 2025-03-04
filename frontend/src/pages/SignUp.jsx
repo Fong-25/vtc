@@ -23,7 +23,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:3000/api/auth/signup", { //update later
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, { //update later
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),

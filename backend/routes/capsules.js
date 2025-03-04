@@ -63,8 +63,30 @@ router.get("/user", isAuthenticated, async (req, res) => {
         const capsules = await Capsule.find({ userId: req.session.userId }).sort({
             createdAt: -1, // Sort by creation date, newest first
         });
+        // console.log("Capsules fetched:", capsules); // Log capsules to verify _id
         res.status(200).json({ capsules });
     } catch (error) {
+        console.error("Server error:", error);
+        res.status(500).json({ error: "Server error: " + error.message });
+    }
+});
+
+router.delete("/:id", isAuthenticated, async (req, res) => {
+    try {
+        // console.log("Deleting capsule with ID:", req.params.id); // Log the ID being requested
+        const capsule = await Capsule.findOne({
+            _id: req.params.id,
+            userId: req.session.userId, // Ensure user owns the capsule
+        });
+        if (!capsule) {
+            return res.status(404).json({ error: "Capsule not found or unauthorized" });
+        }
+
+        await Capsule.deleteOne({ _id: req.params.id });
+        // console.log("Capsule deleted successfully from DB"); // Log success
+        res.status(200).json({ message: "Capsule deleted successfully!" });
+    } catch (error) {
+        console.error("Server error:", error);
         res.status(500).json({ error: "Server error: " + error.message });
     }
 });
