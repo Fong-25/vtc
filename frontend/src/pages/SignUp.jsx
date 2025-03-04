@@ -23,7 +23,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:3000/api/auth/signup", { //updatte later
+            const response = await fetch("http://localhost:3000/api/auth/signup", { //update later
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
@@ -31,9 +31,9 @@ function SignUp() {
             const data = await response.json();
 
             if (response.ok) {
-                toast.success(data.message || "Account created successfully! Login to continue.");
+                toast.success(data.message || "Account created! Login to continue.");
                 setFormData({ username: "", email: "", password: "" }); // Clear form
-                navigate("/dashboard"); // Redirect to dashboard
+                navigate("/login"); // Redirect to dashboard
             } else {
                 toast.error(data.error || "Failed to create account");
             }

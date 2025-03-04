@@ -12,7 +12,7 @@ function Dashboard() {
     useEffect(() => {
         const fetchCapsules = async () => {
             try {
-                const response = await fetch("http://localhost:3000/api/capsules/user", {
+                const response = await fetch("http://localhost:3000/api/capsules/user", { //update later
                     method: "GET",
                     credentials: "include", // Ensure session is sent
                 });
@@ -32,7 +32,6 @@ function Dashboard() {
 
         fetchCapsules();
     }, [navigate]);
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-6 relative">
             <div className="max-w-4xl mx-auto p-8 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 my-5">
@@ -52,15 +51,12 @@ function Dashboard() {
                                 title={capsule.title}
                                 content={capsule.content}
                                 releaseDate={capsule.releaseDate}
-                                media={capsule.media} // Path to image/video
                             />
                         ))
                     ) : (
                         <p className="text-gray-300 text-center">No capsules yet. Create one!</p>
                     )}
                 </div>
-
-                {/* Create button (assuming Create is a component for navigation) */}
 
             </div>
             <Logout />

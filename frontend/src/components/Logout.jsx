@@ -9,7 +9,7 @@ function Logout() {
     const handleLogout = async () => {
         try {
             // Send request to backend logout endpoint
-            const response = await fetch("http://localhost:3000/api/auth/logout", {
+            const response = await fetch("http://localhost:3000/api/auth/logout", { //update later
                 method: "POST",
                 credentials: "include", // Ensure cookies/sessions are sent
             });

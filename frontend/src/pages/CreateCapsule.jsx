@@ -35,17 +35,17 @@ function CreateCapsule() {
             releaseDate: formData.releaseDate,
         };
 
-        console.log("Form data before submission:", data);
+        // console.log("Form data before submission:", data);
 
         try {
-            const response = await fetch("http://localhost:3000/api/capsules/create", {
+            const response = await fetch("http://localhost:3000/api/capsules/create", { // update later
                 method: "POST",
                 headers: { "Content-Type": "application/json" }, // Explicitly set JSON
                 body: JSON.stringify(data),
                 credentials: "include", // Ensure session is sent
             });
-            console.log("Response status:", response.status);
-            console.log("Response headers:", response.headers);
+            // console.log("Response status:", response.status);
+            // console.log("Response headers:", response.headers);
             const result = await response.json();
 
             if (response.ok) {
