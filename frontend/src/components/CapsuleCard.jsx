@@ -63,8 +63,8 @@ function CapsuleCard({ title, content, id, releaseDate, onDelete }) {
     return (
         <div className="p-4 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 mb-4 transition-all duration-500 ease-in-out">
             <img src={isLocked ? lock : unlock} alt="" className="fixed h-7 w-7 rounded-md bg-white/10 backdrop-blur-lg right-[2px] top-[2px]" />
-            <h3 className="text-xl font-bold text-white mb-2">
-                {isLocked ? "Locked Capsule" : title} {/* Hide title if locked */}
+            <h3 className="text-lg font-bold text-white mb-2">
+                {isLocked ? "Locked Capsule" : title}
             </h3>
             {isLocked ? (
                 <p className="text-gray-300">
@@ -77,7 +77,7 @@ function CapsuleCard({ title, content, id, releaseDate, onDelete }) {
                         className="text-white text-[13px] mb-2 flex items-center hover:text-gray-300 transition-colors"
                         aria-label={isOpen ? "Close capsule" : "Open capsule"}
                     >
-                        {isOpen ? "▼ Close" : "► Open"} {/* Arrow icons (▼ for down, ► for right) */}
+                        {isOpen ? "▼ Close" : "► Open"}
                     </button>
                     <div
                         className={`overflow-hidden transition duration-500 ease-in-out ${isOpen ? "max-h-screen" : "max-h-0"
@@ -94,8 +94,8 @@ function CapsuleCard({ title, content, id, releaseDate, onDelete }) {
                     </div>
                 </>
             )}
-            <button className="fixed h-7 w-7 rounded-md bg-white/10 backdrop-blur-lg right-[2px] bottom-[2px]">
-                <img src={deleteIcon} onClick={handleDelete} alt="" />
+            <button className="fixed h-7 w-7 rounded-md bg-white/10 backdrop-blur-lg right-[2px] bottom-[2px] flex items-center justify-center hover:bg-white/20 active:bg-white-50">
+                <img src={deleteIcon} onClick={handleDelete} alt="" className="w-4 h-4" />
             </button>
         </div>
     );

@@ -32,8 +32,8 @@ function Logout() {
     }, []);
     return (
         <>
-            <button className="w-8 h-8 absolute top-1 right-1 bg-gray-200 rounded-[4px] hover:bg-gray-400 active:outline-none active:ring-2 active:ring-white/50 active:bg-gray-300 transition-all duration-300 ease-in-out" onClick={handleLogout}>
-                <img src={logout} alt="" className="w-full h-full" />
+            <button className="flex items-center justify-center w-8 h-8 absolute top-1 right-1 bg-gray-200 rounded-[4px] hover:bg-gray-400 active:outline-none active:ring-2 active:ring-white/50 active:bg-gray-300 transition-all duration-300 ease-in-out" onClick={handleLogout}>
+                <img src={logout} alt="" className="w-4/5 h-4/5" />
             </button>
             <Toaster />
         </>
@@ -41,4 +41,4 @@ function Logout() {
     )
 }
 
-export default Logout
+export default Logout;

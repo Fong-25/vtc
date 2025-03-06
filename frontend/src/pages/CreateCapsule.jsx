@@ -54,6 +54,7 @@ function CreateCapsule() {
                 navigate("/dashboard");
             } else {
                 toast.error(result.error || "Failed to create capsule");
+                navigate("/login"); // Redirect to login if not authenticated
             }
         } catch (error) {
             console.error("Fetch error:", error);

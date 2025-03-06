@@ -4,6 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import CapsuleCard from "../components/CapsuleCard"; // Import CapsuleCard
 import Logout from "../components/Logout";
 import Create from "../components/Create"; // Assuming this is a component for creating capsules
+import UserNavigate from "../assets/images/user.png"
 
 function Dashboard() {
     const [capsules, setCapsules] = useState([]);
@@ -17,7 +18,7 @@ function Dashboard() {
                     credentials: "include", // Ensure session is sent
                 });
                 const data = await response.json();
-                console.log("Fetched capsules data:", data); // Log the response data
+                // console.log("Fetched capsules data:", data); // Log the response data
 
                 if (response.ok) {
                     setCapsules(data.capsules || []);
@@ -39,6 +40,10 @@ function Dashboard() {
         // console.log("Deleting capsule with ID:", capsuleId); // Log the ID being deleted
         setCapsules(capsules.filter((capsule) => capsule._id !== capsuleId));
     };
+
+    const handleInfo = () => {
+        navigate("/info");
+    }
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black p-6 relative">
             <div className="max-w-4xl mx-auto p-8 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 my-5">
@@ -49,8 +54,8 @@ function Dashboard() {
                     Welcome to your Virtual Time Capsule Dashboard! Manage your capsules here.
                 </p>
 
-                {/* Responsive grid of CapsuleCards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Capsule cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 relative">
                     {capsules.length > 0 ? (
                         capsules.map((capsule) => (
                             <CapsuleCard
@@ -63,14 +68,16 @@ function Dashboard() {
                             />
                         ))
                     ) : (
-                        <p className="text-gray-300 text-center">No capsules yet. Create one!</p>
+                        <p className="text-gray-300 text-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">No capsules yet. Create one!</p>
                     )}
                 </div>
-
             </div>
+            <button onClick={handleInfo} className="flex items-center justify-center fixed w-8 h-8 bottom-1 right-1 bg-gray-200 rounded-[4px] hover:bg-gray-400 active:outline-none active:ring-2 active:ring-white/50 active:bg-gray-300 transition-all duration-300 ease-in-out">
+                <img src={UserNavigate} alt="" className="w-4/5 h-4/5"></img>
+            </button>
             <Logout />
             <Create />
-            <Toaster /> {/* Ensure Toaster is here for toasts */}
+            <Toaster />
         </div>
     );
 }

@@ -5,7 +5,7 @@ const User = require("../models/user");
 
 // Middleware to ensure user is logged in
 const isAuthenticated = (req, res, next) => {
-    console.log("Session userId:", req.session.userId);
+    // console.log("Session userId:", req.session.userId);
     if (!req.session.userId) {
         return res.status(401).json({ error: "Not authenticated" });
     }
@@ -15,9 +15,9 @@ const isAuthenticated = (req, res, next) => {
 router.post("/create", isAuthenticated, async (req, res) => {
     try {
         // Enhanced logging to inspect incoming data
-        console.log("Raw request body:", req.body);
-        console.log("Parsed body keys:", Object.keys(req.body));
-        console.log("Parsed body values:", JSON.stringify(req.body, null, 2));
+        // console.log("Raw request body:", req.body);
+        // console.log("Parsed body keys:", Object.keys(req.body));
+        // console.log("Parsed body values:", JSON.stringify(req.body, null, 2));
 
         const { title, content, releaseDate } = req.body;
 
