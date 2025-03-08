@@ -34,7 +34,7 @@ mongoose
 
 // API Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/capsules", capsulesRoutes);
+app.use("/api/capsules", capsulesRoutes.router);
 
 // Serve frontend (for production)
 app.use(express.static(path.join(path.resolve(), "/frontend/dist")));
